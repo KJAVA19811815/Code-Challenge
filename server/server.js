@@ -8,12 +8,20 @@ const data = [
   }
 ];
 
+// io.on("connection", client => {
+//   client.on("subscribeToTimer", interval => {
+//     console.log("client is subscribing to tmier with interval", interval);
+//     setInterval(() => {
+//       client.emit("timer", Date.now());
+//     }, interval);
+//   });
+// });
+
 io.on("connection", client => {
-  client.on("subscribeToTimer", interval => {
-    console.log("client is subscribing to tmier with interval", interval);
-    setInterval(() => {
-      client.emit("timer", Date.now());
-    }, interval);
+  client.on("messages", function() {
+    console.log("sending the messages");
+    client.emit("timer", data);
+    console.log(data);
   });
 });
 

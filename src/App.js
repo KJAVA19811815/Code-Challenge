@@ -2,29 +2,33 @@ import React, { Component } from "react";
 import "./App.css";
 import ChatInputBox from "./Components/ChatInputBox";
 import ChatLog from "./Components/ChatLog";
-import openSocket from "socket.io-client";
-import { subscribeToTimer } from "./api";
+import { messages } from "./api";
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      timestamp: "no stamp"
+      message: []
     };
 
-    subscribeToTimer((err, timestamp) =>
+    messages((err, data) => {
       this.setState({
-        timestamp
-      })
-    );
+        message: data
+      });
+    });
+
+    // subscribeToTimer((err, timestamp) =>
+    //   this.setState({
+    //     timestamp
+    //   })
+    // );
   }
   render() {
     return (
       <div className="App">
-        <ChatLog />
+        <ChatLog messages={this.state.message} />
         <ChatInputBox />
-        <p>This is the value: {this.state.timestamp}</p>
       </div>
     );
   }
