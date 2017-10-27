@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import openSocket from "socket.io-client";
-const socket = openSocket("http://localhost:3001/");
+import io from "socket.io-client";
+// const socket = openSocket("http://localhost:3001/");
 
 export default class ChatInputBox extends Component {
   constructor(props) {
     super(props);
+
+    this.socket = io("http://localhost:3001");
 
     this.state = {
       arr: ["Roger", "Rafa", "Andy", "Novak"],
@@ -20,28 +22,42 @@ export default class ChatInputBox extends Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault();
-    this.setState({
-      form: {
-        name: this.refs.name.value.trim(),
-        message: this.refs.message.value.trim()
-      }
-    });
-    console.log("sending");
-    socket.on("news", function() {
-      socket.emit(
-        "task",
-        JSON.stringify({
-          form: {
-            name: this.state.form.name,
-            message: this.state.form.message
-          }
-        })
-      );
-    });
+    // e.preventDefault();
+    this.setState(
+      {
+        form: {
+          name: this.refs.name.value.trim(),
+          message: this.refs.message.value.trim()
+        }
+      },
+      this.send.bind(this)
+    );
+    // componentDidUpdate(prevProps, prevState) {
+    // if (prevState !== this.state) {
+    // this.socket.emit(
+    //   "emit",
+    //   JSON.stringify({
+    //     form: {
+    //       name: this.state.form.name,
+    //       message: this.state.form.message
+    //     }
+    //   })
+    // );
+    // }
+    // }
+  }
+  send() {
+    this.socket.emit(
+      "emit",
+      JSON.stringify({
+        name: this.state.form.name,
+        message: this.state.form.message
+      })
+    );
   }
 
   render() {
+    console.log(this.state.form);
     return (
       <div className="box">
         <form>

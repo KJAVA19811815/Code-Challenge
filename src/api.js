@@ -12,4 +12,14 @@ function messages(cb) {
   socket.emit("messages");
 }
 
+function task() {
+  socket.on("news", function() {
+    console.log("SENDING");
+    socket.emit("task", {
+      task: "TDD"
+    });
+  });
+}
+
 export { messages };
+export { task };

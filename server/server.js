@@ -7,33 +7,29 @@ function random() {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-const data = [
-  {
-    id: 1,
-    name: random(),
-    message: "I am the best in the world"
-  },
-  {
-    id: 2,
-    name: random(),
-    message: "I won the most french opens"
-  },
-  {
-    id: 3,
-    name: random(),
-    message: "I won the most australian opens"
-  },
-  {
-    id: 4,
-    name: random(),
-    message: "I am stuck at three"
-  }
-];
+const data = [];
 
-io.on("connection", client => {
-  client.on("messages", function() {
+// var id = 0;
+// var nextId = id++
+
+// io.on("connection", client => {
+//   client.on("subscribeToTimer", interval => {
+//     console.log("client is subscribing to timer with interval ", interval);
+//     setInterval(() => {
+//       client.emit("timer", new Date());
+//     }, interval);
+//   });
+// });
+
+io.on("connection", socket => {
+  socket.on("messages", function() {
     console.log("sending the messages");
-    client.emit("timer", data);
+    socket.emit("timer", data);
+  });
+  socket.on("emit", function(msg) {
+    const text = JSON.parse(msg);
+    console.log("TEXT", text);
+    data.push(text);
     console.log(data);
   });
 });
