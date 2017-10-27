@@ -9,7 +9,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      message: []
+      message: [],
+      name: "Karun"
     };
 
     messages((err, data) => {
@@ -17,18 +18,15 @@ class App extends Component {
         message: data
       });
     });
-
-    // subscribeToTimer((err, timestamp) =>
-    //   this.setState({
-    //     timestamp
-    //   })
-    // );
   }
   render() {
+    // random = () => {
+    //   return this.state.arr[Math.floor(Math.random() * this.state.arr.length)];
+    // };
     return (
       <div className="App">
         <ChatLog messages={this.state.message} />
-        <ChatInputBox />
+        <ChatInputBox sendUsername={this.state.name} />
       </div>
     );
   }

@@ -1,25 +1,13 @@
 const express = require("express");
 const io = require("socket.io")();
+const mongoose = require("mongoose");
+const Message = require("./models/messages");
 
-const arr = ["Roger", "Rafa", "Andy", "Novak"];
-
-function random() {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
+// mongoose.connect("mongodb://localhost/react", () => {
+//   console.log("connected");
+// });
 
 const data = [];
-
-// var id = 0;
-// var nextId = id++
-
-// io.on("connection", client => {
-//   client.on("subscribeToTimer", interval => {
-//     console.log("client is subscribing to timer with interval ", interval);
-//     setInterval(() => {
-//       client.emit("timer", new Date());
-//     }, interval);
-//   });
-// });
 
 io.on("connection", socket => {
   socket.on("messages", function() {
@@ -30,7 +18,6 @@ io.on("connection", socket => {
     const text = JSON.parse(msg);
     console.log("TEXT", text);
     data.push(text);
-    console.log(data);
   });
 });
 
