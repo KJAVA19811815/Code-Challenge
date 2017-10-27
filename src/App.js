@@ -20,9 +20,6 @@ class App extends Component {
     });
   }
   render() {
-    // random = () => {
-    //   return this.state.arr[Math.floor(Math.random() * this.state.arr.length)];
-    // };
     return (
       <div className="App">
         <ChatLog messages={this.state.message} />

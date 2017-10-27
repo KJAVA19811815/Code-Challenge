@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import io from "socket.io-client";
+import Cookies from "universal-cookie";
 
 export default class ChatInputBox extends Component {
   constructor(props) {
@@ -13,10 +14,16 @@ export default class ChatInputBox extends Component {
     };
   }
 
+  random = () => {
+    return this.state.name[Math.floor(Math.random() * this.state.name.length)];
+  };
+
   nameChange(e) {
+    const cookies = new Cookies();
     this.setState({
       name: e.target.value
     });
+    cookies.set("LOL", this.state.name, { path: "/" });
   }
 
   handleSubmit(e) {
