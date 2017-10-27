@@ -1,5 +1,8 @@
-const express = require("express");
 const io = require("socket.io")();
+
+const port = 3002;
+io.listen(port);
+console.log("at 3002");
 
 const arr = ["Roger", "Rafa", "Andy", "Novak"];
 
@@ -30,15 +33,9 @@ const data = [
   }
 ];
 
-io.on("connection", client => {
-  client.on("messages", function() {
-    console.log("sending the messages");
-    client.emit("timer", data);
+io.on("connection", function(socket) {
+  socket.emit("news", { data: data });
+  socket.on("my other event", function(data) {
     console.log(data);
   });
 });
-
-const port = 3001;
-
-io.listen(port);
-console.log("at 3001");

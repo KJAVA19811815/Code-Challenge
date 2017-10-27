@@ -6,12 +6,16 @@ export default class ChatLog extends Component {
       return <p>No messages</p>;
     } else {
       return this.props.messages.map(function(m) {
-        return <p>{m.message}</p>;
+        return (
+          <div className="messages">
+            <p id={m.id}>{m.name}</p>
+            <p>{m.message}</p>
+          </div>
+        );
       });
     }
   };
   render() {
-    console.log(this.props);
     return (
       <div>
         <div id="mario-chat">

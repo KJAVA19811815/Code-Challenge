@@ -8,6 +8,11 @@ body {
   justify-content: center;
 }
 
+.messages {
+  display: flex;
+  justify-content: space-around;
+}
+
 h2 {
   font-size: 18px;
   padding: 10px 20px;
