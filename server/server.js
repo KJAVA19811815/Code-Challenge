@@ -3,11 +3,16 @@ const io = require("socket.io")();
 const mongoose = require("mongoose");
 const Message = require("./models/messages");
 
-// mongoose.connect("mongodb://localhost/react", () => {
-//   console.log("connected");
-// });
-
-const data = [];
+const data = [
+  {
+    name: "Roger",
+    message: "I am the best tennis player in the world"
+  },
+  {
+    name: "Nadal",
+    message: "I am the greatest clay-court player of all time"
+  }
+];
 
 io.on("connection", socket => {
   socket.on("messages", function() {
@@ -20,6 +25,12 @@ io.on("connection", socket => {
     data.push(text);
   });
 });
+
+const nsp = io.of("/my-namespace");
+nsp.on("connection", function(socket) {
+  console.log("someone connected");
+});
+nsp.emit("hi", "everyone");
 
 const port = 3001;
 

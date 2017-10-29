@@ -3,6 +3,7 @@ import "./App.css";
 import ChatInputBox from "./Components/ChatInputBox";
 import ChatLog from "./Components/ChatLog";
 import { messages } from "./api";
+import io from "socket.io-client";
 
 class App extends Component {
   constructor(props) {
