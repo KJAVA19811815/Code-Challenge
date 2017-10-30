@@ -2,6 +2,7 @@ const express = require("express");
 const io = require("socket.io")();
 const mongo = require("mongodb").MongoClient;
 
+//CONNECTING TO MONGODB
 mongo.connect("mongodb://127.0.0.1/mongochat", function(err, db) {
   if (err) {
     throw err;
@@ -9,13 +10,17 @@ mongo.connect("mongodb://127.0.0.1/mongochat", function(err, db) {
     console.log("MONGO CONNECTED");
   }
 
+  //CONNECTING TO CLIENT
   io.on("connection", socket => {
     let chat = db.collection("chats");
+    // CREATING THE CONNECTION
 
+    //HELPER FUNCTION
     sendStatus = function(s) {
       socket.emit("status", s);
     };
 
+    //GET THE MESSAGES WHICH ARE TO BE SENT TO THE CLIENT
     chat
       .find()
       .limit(20)
@@ -26,18 +31,21 @@ mongo.connect("mongodb://127.0.0.1/mongochat", function(err, db) {
         } else {
           socket.on("messages", function() {
             console.log("sending the messages");
+            // EMIT THE MESSAGES TO THE CLIENT
             socket.emit("timer", res);
           });
         }
       });
     socket.on("emit", function(data) {
-      const text = JSON.parse(data);
+      //GETTING THE DATA FROM THE CLIENT
+      const text = JSON.parse(data); //PARSING THE DATA USING PARSE
       let name = text.name;
       let message = text.message;
 
       if (name == "" || message == "") {
         sendStatus("plz enter name and message");
       } else {
+        //INSERTING THE MESSAGE INTO THE COLLECTION
         chat.insert({ name: name, message: message }, function() {
           socket.emit("timer", [data]);
           console.log("IT IS INSERTED");
@@ -45,18 +53,9 @@ mongo.connect("mongodb://127.0.0.1/mongochat", function(err, db) {
           sendStatus("message sent");
         });
       }
-      // const text = JSON.parse(msg);
-      // console.log("TEXT", text);
-      // data.push(text);
     });
   });
 });
-
-const nsp = io.of("/my-namespace");
-nsp.on("connection", function(socket) {
-  console.log("someone connected");
-});
-nsp.emit("hi", "everyone");
 
 const port = 3001;
 

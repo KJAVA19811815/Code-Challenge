@@ -7,6 +7,7 @@ export default class ChatInputBox extends Component {
     super(props);
 
     this.socket = io("http://localhost:3001");
+    // CONNECTION TO THE SERVER
 
     this.state = {
       name: this.props.sendUsername,
@@ -14,16 +15,14 @@ export default class ChatInputBox extends Component {
     };
   }
 
-  // random = () => {
-  //   return this.state.name[Math.floor(Math.random() * this.state.name.length)];
-  // };
-
   nameChange(e) {
+    // FUNCTION TO CHANGE NAME
     const cookies = new Cookies();
     this.setState({
       name: e.target.value
     });
     cookies.set("LOL", this.state.name, { path: "/" });
+    // SAVE USER INFO IN BROWSER COOKIE
   }
 
   handleSubmit(e) {
@@ -35,6 +34,7 @@ export default class ChatInputBox extends Component {
     );
   }
   send() {
+    // FUNCTION TO SEND THE NEWLY CREATED MESSAGE TO THE SERVER
     this.socket.emit(
       "emit",
       JSON.stringify({

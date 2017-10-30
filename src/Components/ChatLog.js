@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 
 export default class ChatLog extends Component {
+  //HELPER FUNCTION TO RENDER THE MESSAGES TO THE SCREEN
   renderMessages = () => {
+    //CHECKING IF THERE ARE NO MESSAGES
     if (this.props.messages.length === 0) {
       return <p>No messages</p>;
     } else {
@@ -18,7 +20,7 @@ export default class ChatLog extends Component {
   render() {
     return (
       <div>
-        <div id="mario-chat">
+        <div id="chat">
           <div id="chat-window">
             <div id="output">{this.renderMessages()}</div>
           </div>
