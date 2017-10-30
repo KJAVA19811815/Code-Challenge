@@ -14,9 +14,9 @@ export default class ChatInputBox extends Component {
     };
   }
 
-  random = () => {
-    return this.state.name[Math.floor(Math.random() * this.state.name.length)];
-  };
+  // random = () => {
+  //   return this.state.name[Math.floor(Math.random() * this.state.name.length)];
+  // };
 
   nameChange(e) {
     const cookies = new Cookies();
