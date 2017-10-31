@@ -8,7 +8,9 @@
 2. Install dependencies using `npm install`.
 3. Do npm for both parent folder and server folder.
 4. The client will be served at <http://localhost:3000/>
-5. <http://localhost:3001/> is for the server.
+5. <http://localhost:3001/> is for the server and for communication.
+6. Run the client with `npm start`.
+7. Run the server with `node server.js`.
 
 ## Dependencies
 
